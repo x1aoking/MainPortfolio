@@ -15,22 +15,29 @@ export default function TechStack() {
 
   return (
     <div className="card card-hover">
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+      <div style={{
+        display: "flex", alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 16, gap: 8,
+        minWidth: 0, maxWidth: "100%",
+      }}>
         <h2 className="stitle" style={{ margin: 0 }}>Tech Stack</h2>
         <a href="/tech-stack" className="vlink">View All</a>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: "100%" }}>
         {visible.map(([group, items]) => (
-          <div key={group} style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+          <div key={group} style={{
+            display: "flex", flexDirection: "column", gap: 5,
+            minWidth: 0, maxWidth: "100%",
+          }}>
             <span style={{
               fontSize: 10, fontWeight: 700, color: "var(--text-faint)",
               letterSpacing: "0.06em", textTransform: "uppercase",
-              minWidth: 80, flexShrink: 0, paddingTop: 2,
             }}>
               {group}
             </span>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 5, maxWidth: "100%" }}>
               {items.map((item) => (
                 <span key={item} className="pill">{item}</span>
               ))}

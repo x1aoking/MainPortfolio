@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
-/* Force Tailwind to use class-based dark mode only, not OS preference */
 @custom-variant dark (&:where(.dark, .dark *));
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root { font-size: 16px; }
 
-/* ── Light tokens ── */
 :root {
   --bg-page:    #f1f5f9;
   --bg-card:    #ffffff;
@@ -23,7 +25,6 @@
   --btn-dark:   #0f172a;
 }
 
-/* ── Dark tokens ── */
 html.dark {
   --bg-page:    #0f172a;
   --bg-card:    #1e293b;
@@ -40,6 +41,14 @@ html.dark {
   color-scheme: dark;
 }
 
+html {
+  background: var(--bg-page);
+  scroll-behavior: smooth;
+  transition: background 0.2s;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   background: var(--bg-page);
   color: var(--text-head);
@@ -49,12 +58,8 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background 0.2s, color 0.2s;
   min-height: 100vh;
-}
-
-html {
-  background: var(--bg-page);
-  scroll-behavior: smooth;
-  transition: background 0.2s;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -63,49 +68,86 @@ a { color: inherit; text-decoration: none; }
   max-width: 920px;
   margin: 0 auto;
   padding: 24px 16px 48px;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
-/* Cards */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 20px;
   transition: background 0.2s, border-color 0.2s;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* Stack */
+.card > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .stack { display: flex; flex-direction: column; gap: 12px; }
 
-/* Two column */
-.layout { display: flex; gap: 14px; align-items: flex-start; }
-.col-main { flex: 1; min-width: 0; }
-.col-side { width: 268px; flex-shrink: 0; display: flex; flex-direction: column; gap: 12px; }
+.layout {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.col-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.col-side {
+  width: 268px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+}
 
 @media (max-width: 680px) {
   .layout { flex-direction: column; }
   .col-side { width: 100%; }
+  .page { padding: 12px 12px 40px; }
+  .card { padding: 16px; }
 }
 
-/* Section title */
+@media (max-width: 400px) {
+  .page { padding: 8px 8px 32px; }
+  .card { padding: 14px 12px; }
+}
+
 .stitle {
   font-size: 13px;
   font-weight: 700;
   color: var(--text-head);
   letter-spacing: -0.01em;
   margin-bottom: 14px;
+  max-width: 100%;
 }
 
-/* View all */
 .vlink {
   font-size: 12px;
   color: var(--text-faint);
   font-weight: 500;
   transition: color 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .vlink:hover { color: var(--text-muted); }
 
-/* Pills */
 .pill {
   display: inline-flex;
   align-items: center;
@@ -118,9 +160,9 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   white-space: nowrap;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
+  max-width: 100%;
 }
 
-/* Buttons */
 .btn-dark {
   display: inline-flex;
   align-items: center;
@@ -134,6 +176,7 @@ a { color: inherit; text-decoration: none; }
   transition: background 0.15s, transform 0.1s;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
 }
 .btn-dark:hover { opacity: 0.85; transform: translateY(-1px); }
 
@@ -149,10 +192,10 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   border: 1px solid var(--border);
   transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  white-space: nowrap;
 }
 .btn-ghost:hover { background: var(--bg-row); border-color: var(--border-mid); transform: translateY(-1px); }
 
-/* Row items */
 .row-item {
   display: flex;
   align-items: flex-start;
@@ -163,10 +206,11 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg-row);
   transition: border-color 0.15s, background 0.2s;
   color: inherit;
+  min-width: 0;
+  max-width: 100%;
 }
 .row-item:hover { border-color: var(--border-mid); }
 
-/* Timeline */
 .tl-dot {
   width: 9px; height: 9px;
   border-radius: 50%;
@@ -181,10 +225,8 @@ a { color: inherit; text-decoration: none; }
   min-height: 12px;
 }
 
-/* Divider */
 hr { border: none; border-top: 1px solid var(--border); }
 
-/* Social row */
 .social-row {
   display: flex;
   align-items: center;
@@ -199,7 +241,6 @@ hr { border: none; border-top: 1px solid var(--border); }
 }
 .social-row:hover { border-color: var(--border-mid); }
 
-/* Availability pulse */
 @keyframes ping {
   0% { transform: scale(1); opacity: 0.7; }
   100% { transform: scale(2); opacity: 0; }
@@ -213,11 +254,9 @@ hr { border: none; border-top: 1px solid var(--border); }
   animation: ping 1.6s ease-out infinite;
 }
 
-/* Gallery */
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 7px; }
 .gallery-item { aspect-ratio: 1; border-radius: 9px; overflow: hidden; }
 
-/* Tech category label */
 .cat-label {
   font-size: 10px;
   font-weight: 600;
@@ -227,7 +266,6 @@ hr { border: none; border-top: 1px solid var(--border); }
   margin-bottom: 6px;
 }
 
-/* Recommendation quote */
 .rec {
   padding: 14px;
   border-radius: 10px;
@@ -235,6 +273,5 @@ hr { border: none; border-top: 1px solid var(--border); }
   background: var(--bg-row);
 }
 
-/* Card hover shadow */
 .card-hover { transition: box-shadow 0.2s, background 0.2s, border-color 0.2s; }
 .card-hover:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }

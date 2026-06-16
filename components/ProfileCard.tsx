@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { MapPin, Mail, Globe, CalendarDays } from "lucide-react";
 
@@ -29,17 +28,19 @@ export default function ProfileCard() {
 
   return (
     <div className="card card-hover">
-
-      {/* Top row: avatar + info */}
-      <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-
+      {/* Top row */}
+      <div style={{
+        display: "flex", alignItems: "center",
+        gap: 16, flexWrap: "wrap",
+        minWidth: 0, maxWidth: "100%",
+      }}>
         {/* Avatar */}
         {imgError ? (
           <div style={{
-            width: 100, height: 100, borderRadius: 16, flexShrink: 0,
+            width: 80, height: 80, borderRadius: 16, flexShrink: 0,
             display: "flex", alignItems: "center", justifyContent: "center",
             background: "linear-gradient(135deg, #3b82f6, #6366f1)",
-            color: "#fff", fontWeight: 700, fontSize: 24,
+            color: "#fff", fontWeight: 700, fontSize: 22,
           }}>JJ</div>
         ) : (
           <img
@@ -47,30 +48,33 @@ export default function ProfileCard() {
             alt="Jerico P. Jacob"
             onError={() => setImgError(true)}
             style={{
-              width: 100, height: 100, borderRadius: 16, flexShrink: 0,
+              width: 80, height: 80, borderRadius: 16, flexShrink: 0,
               objectFit: "cover", objectPosition: "top",
             }}
           />
         )}
 
         {/* Name + location */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <h1 style={{ fontSize: 18, fontWeight: 700, color: "var(--text-head)", margin: 0, letterSpacing: "-0.01em" }}>
+        <div style={{ flex: 1, minWidth: 0, maxWidth: "100%", overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", minWidth: 0 }}>
+            <h1 style={{
+              fontSize: 17, fontWeight: 700, color: "var(--text-head)",
+              margin: 0, letterSpacing: "-0.01em",
+              overflow: "hidden", textOverflow: "ellipsis",
+              whiteSpace: "nowrap", maxWidth: "100%",
+              minWidth: 0,
+            }}>
               Jerico P. Jacob
             </h1>
             <span style={{
-              width: 17, height: 17, borderRadius: "50%", background: "#3b82f6",
+              width: 16, height: 16, borderRadius: "50%", background: "#3b82f6",
               display: "inline-flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", fontSize: 10, fontWeight: 700, flexShrink: 0,
+              color: "#fff", fontSize: 9, fontWeight: 700, flexShrink: 0,
             }}>v</span>
-
-            {/* Toggle */}
             <button
               onClick={toggleDark}
               style={{
-                marginLeft: 8,
-                width: 40, height: 24, borderRadius: 999,
+                marginLeft: 4, width: 40, height: 24, borderRadius: 999,
                 border: "1px solid var(--border)",
                 background: dark ? "#334155" : "#e2e8f0",
                 position: "relative", cursor: "pointer",
@@ -89,8 +93,11 @@ export default function ProfileCard() {
             </button>
           </div>
 
-          <p style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: "var(--text-muted)", margin: "6px 0 0" }}>
-            <MapPin size={11} />
+          <p style={{
+            display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap",
+            fontSize: 12, color: "var(--text-muted)", margin: "6px 0 0",
+          }}>
+            <MapPin size={11} style={{ flexShrink: 0 }} />
             Binalonan, Pangasinan
           </p>
         </div>
@@ -98,26 +105,33 @@ export default function ProfileCard() {
 
       {/* Action row */}
       <div style={{
-        display: "flex", alignItems: "center", gap: 16,
+        display: "flex", alignItems: "center", gap: 10,
         marginTop: 16, paddingTop: 14,
         borderTop: "1px solid var(--border)",
         flexWrap: "wrap",
+        minWidth: 0, maxWidth: "100%",
       }}>
         <a href="#" style={{
           display: "inline-flex", alignItems: "center", gap: 6,
           background: "var(--btn-dark)", color: "var(--text-white)",
           fontSize: 12, fontWeight: 600, padding: "6px 13px",
           borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap",
+          flexShrink: 0,
         }}>
-          <CalendarDays size={13} /> Schedule a Call&gt;
+          <CalendarDays size={13} /> Schedule a Call
         </a>
-        <a href="mailto:jeriqttt@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "var(--text-body)", fontSize: 12, textDecoration: "none" }}>
-          <Mail size={12} /> Send Email
+        <a href="mailto:jeriqttt@gmail.com" style={{
+          display: "inline-flex", alignItems: "center", gap: 5,
+          color: "var(--text-body)", fontSize: 12, whiteSpace: "nowrap",
+        }}>
+          <Mail size={12} style={{ flexShrink: 0 }} /> Send Email
         </a>
-        <a href="#" style={{ display: "inline-flex", alignItems: "center", gap: 5, color: "var(--text-body)", fontSize: 12, textDecoration: "none" }}>
-          <Globe size={12} /> Read my blog
+        <a href="#" style={{
+          display: "inline-flex", alignItems: "center", gap: 5,
+          color: "var(--text-body)", fontSize: 12, whiteSpace: "nowrap",
+        }}>
+          <Globe size={12} style={{ flexShrink: 0 }} /> Read my blog
         </a>
-        <span style={{ marginLeft: "auto", color: "var(--text-faint)", fontSize: 12 }}>&gt;</span>
       </div>
     </div>
   );

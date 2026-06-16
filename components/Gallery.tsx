@@ -25,38 +25,55 @@ export default function Gallery() {
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir === "left" ? -240 : 240, behavior: "smooth" });
+    el.scrollBy({ left: dir === "left" ? -220 : 220, behavior: "smooth" });
     setTimeout(updateScrollState, 350);
   };
+
+  const arrowStyle = (active: boolean, side: "left" | "right"): React.CSSProperties => ({
+    position: "absolute",
+    [side]: 0,
+    zIndex: 10,
+    width: 28, height: 28,
+    borderRadius: "50%",
+    background: "var(--bg-card)",
+    border: "1px solid var(--border)",
+    color: "var(--text-body)",
+    cursor: active ? "pointer" : "default",
+    fontSize: 16,
+    display: "flex", alignItems: "center", justifyContent: "center",
+    opacity: active ? 1 : 0.25,
+    flexShrink: 0,
+    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+    transition: "opacity 0.2s",
+  });
 
   return (
     <>
       <div className="card card-hover">
         <h2 className="stitle" style={{ marginBottom: 12 }}>Gallery</h2>
-        <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-
-          {/* Left arrow */}
+        <div style={{
+          position: "relative", display: "flex",
+          alignItems: "center", maxWidth: "100%", overflow: "hidden",
+        }}>
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
-            style={{
-              position: "absolute", left: -10, zIndex: 10,
-              width: 28, height: 28, borderRadius: "50%",
-              background: "var(--bg-card)", border: "1px solid var(--border)",
-              color: "var(--text-body)", cursor: "pointer", fontSize: 16,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              opacity: canScrollLeft ? 1 : 0.25, flexShrink: 0,
-              boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-            }}
+            style={arrowStyle(canScrollLeft, "left")}
+            aria-label="Scroll left"
           >‹</button>
 
-          {/* Scroll track */}
           <div
             ref={scrollRef}
             onScroll={updateScrollState}
             style={{
-              display: "flex", gap: 8, overflowX: "auto", width: "100%",
-              scrollbarWidth: "none", scrollBehavior: "smooth", padding: "4px 6px",
+              display: "flex",
+              gap: 8,
+              overflowX: "auto",
+              width: "100%",
+              scrollbarWidth: "none",
+              scrollBehavior: "smooth",
+              padding: "4px 36px",
+              boxSizing: "border-box",
             }}
           >
             {IMAGES.map((img, i) => (
@@ -64,9 +81,14 @@ export default function Gallery() {
                 key={i}
                 onClick={() => setLightbox(img.src)}
                 style={{
-                  flexShrink: 0, width: 180, height: 130, borderRadius: 10,
-                  overflow: "hidden", background: "var(--bg-row)",
-                  border: "1px solid var(--border)", cursor: "zoom-in",
+                  flexShrink: 0,
+                  width: "clamp(110px, 34vw, 180px)",
+                  height: "clamp(80px, 24vw, 130px)",
+                  borderRadius: 10,
+                  overflow: "hidden",
+                  background: "var(--bg-row)",
+                  border: "1px solid var(--border)",
+                  cursor: "zoom-in",
                   transition: "transform 0.2s, box-shadow 0.2s",
                 }}
                 onMouseEnter={e => {
@@ -81,30 +103,24 @@ export default function Gallery() {
                 <img
                   src={img.src}
                   alt={img.alt}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
+                  style={{
+                    width: "100%", height: "100%",
+                    objectFit: "cover", objectPosition: "top center",
+                  }}
                 />
               </div>
             ))}
           </div>
 
-          {/* Right arrow */}
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
-            style={{
-              position: "absolute", right: -10, zIndex: 10,
-              width: 28, height: 28, borderRadius: "50%",
-              background: "var(--bg-card)", border: "1px solid var(--border)",
-              color: "var(--text-body)", cursor: "pointer", fontSize: 16,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              opacity: canScrollRight ? 1 : 0.25, flexShrink: 0,
-              boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-            }}
+            style={arrowStyle(canScrollRight, "right")}
+            aria-label="Scroll right"
           >›</button>
         </div>
       </div>
 
-      {/* Lightbox */}
       {lightbox && (
         <div
           onClick={() => setLightbox(null)}
@@ -112,14 +128,14 @@ export default function Gallery() {
             position: "fixed", inset: 0, zIndex: 1000,
             background: "rgba(0,0,0,0.85)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "zoom-out", padding: 24,
+            cursor: "zoom-out", padding: 16,
           }}
         >
           <img
             src={lightbox}
             alt="Full size"
             style={{
-              maxWidth: "90vw", maxHeight: "90vh",
+              maxWidth: "92vw", maxHeight: "88vh",
               borderRadius: 12, objectFit: "contain",
               boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
             }}
@@ -128,12 +144,13 @@ export default function Gallery() {
           <button
             onClick={() => setLightbox(null)}
             style={{
-              position: "absolute", top: 20, right: 24,
+              position: "absolute", top: 16, right: 16,
               background: "rgba(255,255,255,0.15)", border: "none",
-              color: "#fff", fontSize: 22, width: 36, height: 36,
+              color: "#fff", fontSize: 20, width: 36, height: 36,
               borderRadius: "50%", cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}
+            aria-label="Close lightbox"
           >✕</button>
         </div>
       )}

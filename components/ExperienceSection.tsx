@@ -30,40 +30,78 @@ export default function ExperienceSection() {
   return (
     <div className="card card-hover">
       <h2 className="stitle">Experience</h2>
-      <div>
+      <div style={{ maxWidth: "100%" }}>
         {timeline.map((item, i) => (
-          <div key={i} className="flex gap-3">
-            {/* Square indicator + line */}
-            <div className="flex flex-col items-center" style={{ width: 16, flexShrink: 0 }}>
-              <div
-                style={{
-                  width: 14,
-                  height: 14,
-                  borderRadius: 3,
-                  flexShrink: 0,
-                  marginTop: 2,
-                  background: item.current ? "#0f172a" : "transparent",
-                  border: item.current ? "2px solid #0f172a" : "2px solid #cbd5e1",
-                }}
-              />
+          <div key={i} style={{
+            display: "flex", gap: 12,
+            minWidth: 0, maxWidth: "100%",
+          }}>
+            {/* Indicator + line */}
+            <div style={{
+              display: "flex", flexDirection: "column",
+              alignItems: "center", width: 16, flexShrink: 0,
+            }}>
+              <div style={{
+                width: 14, height: 14, borderRadius: 3,
+                flexShrink: 0, marginTop: 2,
+                background: item.current ? "var(--text-head)" : "transparent",
+                border: item.current
+                  ? "2px solid var(--text-head)"
+                  : "2px solid var(--border-mid)",
+                transition: "background 0.2s, border-color 0.2s",
+              }} />
               {i < timeline.length - 1 && (
-                <div style={{ width: 2, flex: 1, background: "#e2e8f0", marginTop: 4 }} />
+                <div style={{
+                  width: 2, flex: 1,
+                  background: "var(--border)",
+                  marginTop: 4,
+                  transition: "background 0.2s",
+                }} />
               )}
             </div>
 
             {/* Content */}
-            <div style={{ paddingBottom: i < timeline.length - 1 ? 20 : 0, flex: 1 }}>
-              <div className="flex items-start justify-between gap-2 flex-wrap">
-                <div>
-                  <p style={{ fontSize: 13, fontWeight: 600, color: "#0f172a", margin: 0 }}>{item.title}</p>
-                  <p style={{ fontSize: 12, color: "#64748b", margin: 0, marginTop: 2 }}>{item.sub}</p>
+            <div style={{
+              paddingBottom: i < timeline.length - 1 ? 20 : 0,
+              flex: 1, minWidth: 0, maxWidth: "100%",
+            }}>
+              <div style={{
+                display: "flex", alignItems: "flex-start",
+                justifyContent: "space-between",
+                gap: 8, flexWrap: "wrap",
+              }}>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <p style={{
+                    fontSize: 13, fontWeight: 600,
+                    color: "var(--text-head)", margin: 0,
+                    wordBreak: "break-word",
+                    transition: "color 0.2s",
+                  }}>{item.title}</p>
+                  <p style={{
+                    fontSize: 12, color: "var(--text-muted)",
+                    margin: "2px 0 0", wordBreak: "break-word",
+                    transition: "color 0.2s",
+                  }}>{item.sub}</p>
                 </div>
-                <span style={{ fontSize: 11, color: "#94a3b8", whiteSpace: "nowrap", marginTop: 1 }}>{item.year}</span>
+                <span style={{
+                  fontSize: 11, color: "var(--text-faint)",
+                  whiteSpace: "nowrap", marginTop: 1,
+                  flexShrink: 0, transition: "color 0.2s",
+                }}>{item.year}</span>
               </div>
+
               {item.bullets.length > 0 && (
-                <ul className="mt-2 space-y-1" style={{ paddingLeft: 14 }}>
+                <ul style={{
+                  paddingLeft: 14, marginTop: 8,
+                  display: "flex", flexDirection: "column", gap: 4,
+                }}>
                   {item.bullets.map((b, j) => (
-                    <li key={j} style={{ fontSize: 12, color: "#64748b", lineHeight: 1.6, listStyleType: "disc" }}>{b}</li>
+                    <li key={j} style={{
+                      fontSize: 12, color: "var(--text-muted)",
+                      lineHeight: 1.6, listStyleType: "disc",
+                      wordBreak: "break-word",
+                      transition: "color 0.2s",
+                    }}>{b}</li>
                   ))}
                 </ul>
               )}

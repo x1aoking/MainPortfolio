@@ -12,9 +12,14 @@ export default function Home() {
     <div className="page">
       <ProfileCard />
 
-      <div className="layout" style={{ marginTop: 16 }}>
-        {/* Main column */}
-        <div className="col-main stack">
+      <div
+        className="layout"
+        style={{ marginTop: 16, minWidth: 0, maxWidth: "100%", overflow: "hidden" }}
+      >
+        <div
+          className="col-main stack"
+          style={{ minWidth: 0, maxWidth: "100%", overflow: "hidden" }}
+        >
           <AboutSection />
           <TechStack />
           <Projects />
@@ -23,13 +28,15 @@ export default function Home() {
           <Gallery />
         </div>
 
-        {/* Sidebar */}
-        <div className="col-side">
+        <div className="col-side" style={{ minWidth: 0, maxWidth: "100%" }}>
           <ExperienceSection />
         </div>
       </div>
 
-      <p style={{ textAlign: "center", marginTop: 32, fontSize: 11, color: "var(--text-faint)" }}>
+      <p style={{
+        textAlign: "center", marginTop: 32,
+        fontSize: 11, color: "var(--text-faint)",
+      }}>
         © 2025 Jerico P. Jacob · All rights reserved.
       </p>
     </div>
